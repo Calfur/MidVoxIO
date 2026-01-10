@@ -150,6 +150,8 @@ class Vox():
 
     def _to_full(self, model):
         vc = np.array(model)
+        if len(vc) == 0:
+            return np.zeros(shape=(0, 0, 0), dtype=np.uint8)
         shape = 1 + vc.max(axis=0)
         full = np.zeros(shape=shape[:-1], dtype=np.uint8)
         full[vc[:, 0], vc[:, 1], vc[:, 2]] = vc[:, 3]
@@ -177,6 +179,8 @@ class Vox():
             transform = np.array(transform)
             offset = transform - min_tran
             vc = np.array(voxel_chunk)
+            if len(vc) == 0:
+                continue
             vc[:, 0:3] += offset
             combined_model[vc[:, 0], vc[:, 1], vc[:, 2]] = vc[:, 3]
 
